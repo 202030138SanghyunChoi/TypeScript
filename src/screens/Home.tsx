@@ -1,10 +1,12 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Container = styled.div``;
 const Title = styled.div``;
 
 export default () => {
-    return <Container>
-        <Title>Home Page</Title>        
+  return (
+    <Container>
+      <Title>Home Page</Title>
     </Container>
-}
+  );
+};
