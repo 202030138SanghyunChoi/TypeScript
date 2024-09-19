@@ -1,5 +1,10 @@
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import styled from "styled-components";
+import { auth } from "../firebaseConfig";
+import { FirebaseError } from "firebase/app";
+import { useNavigate } from "react-router-dom";
+import home from "./home";
 
 // ?????????????????????????????????
 const Container = styled.div`
@@ -57,14 +62,46 @@ const SubTitle = styled.p`
   font-size: 12px;
 `;
 
+// 회원가입 버튼
+const SignUpButton = styled.div`
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: green;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+
+// 에러 메시지
+const ErrorMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 5px 0px;
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+  overflow-y: hidden;
+`;
+
 export default () => {
-  // default로 export하느 컴포넌트 안에서 return 하기 전에 로직 작성
+  // default로 export하는 컴포넌트 안에서 return 하기 전에 로직 작성
+
+  // 페이지 이동 Hook 생성
+  const navi = useNavigate();
 
   // 회원 정보 저장(State - 값이 변경되는 변수 / stateHook 사용)
   // 리턴값을 배열형태로 두개를 받아옴. 변수(저장할데이터값), set변수(값을 변경할 함수)
   const [nickName, setNickName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  // 로딩 여부 변수
+  const [loading, setLoading] = useState<boolean>(false);
+  // 에러 메시지 변수
+  const [error, setError] = useState<string>("");
 
   // 회원 정보 가공 및 수정(OnChange 사용)
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,17 +125,52 @@ export default () => {
     }
   };
 
-  // 회원 가입 버튼 클릭 시 입력한 폼의 정보를 전송(Validate 포함)
-  // 중복 계정 및 에러 사항 처리
-  // 로딩 처리
-  const onSubmit = () => {};
+  // 비동기 처리를 위해 함수에 async 적용
+  const onSubmit = async () => {
+    // 입력값 확인
+    if (nickName === "" || email === "" || password === "") {
+      alert("회원 정보를 모두 입력하십시오.");
+      return false;
+    }
+
+    try {
+      // 정상 작동
+      // 로딩 시작
+      setLoading(true);
+      // 유저 CREATE 메서드(인증방법, 아이디, 비밀번호)
+      // 비동기 처리 - await
+      const credential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // 유저 이름 설정
+      updateProfile(credential.user, {
+        displayName: nickName,
+      });
+
+      // 페이지 이동
+      navi("/");
+    } catch (error) {
+      // 예외 처리
+      // FireBase 관련 에러 처리(Type이 FirebaseError로 판단)
+      if (error instanceof FirebaseError) {
+        // 에러 '코드'로 에러 변수 설정
+        setError(error.code);
+      }
+    } finally {
+      // 항상 수행
+      // 로딩 종료
+      setLoading(false);
+    }
+  };
 
   return (
     <Container>
       <Title>회원 가입</Title>
       <Form>
         <SubTitle>이름</SubTitle>
-        {/* onChange 생략 과정 */}
+        {/* onChange 함수 사용 */}
         <Input
           type="text"
           name="nickName"
@@ -121,8 +193,25 @@ export default () => {
           onChange={onChange}
           value={password}
         />
-        <Input type="submit" value="회원 가입" />
+        {/* onSubmit 함수 사용 */}
+        {/* loading 적용 */}
+        <SignUpButton onClick={loading ? undefined : onSubmit}>
+          {loading ? "회원가입 중.." : "가입하기"}
+        </SignUpButton>
+        <ErrorMessage>{errorMessageGroup[error]}</ErrorMessage>
       </Form>
     </Container>
   );
+};
+
+// 에러메시지 유형 타입 스크립트 적용
+// 타입 인터페이스 정의(string 타입으로 타입 범주 넓히기)
+interface errorMsgGroupType {
+  [key: string]: string;
+}
+// 인터페이스 구현
+const errorMessageGroup: errorMsgGroupType = {
+  "auth/email-already-in-use": "이미 존재하는 계정입니다.",
+  "auth/weak-password": "비밀번호는 6자리 이상 입력해주시기 바랍니다.",
+  "auth/invaild-email": "잘못된 이메일 혹은 잘못된 비밀번호입니다.",
 };

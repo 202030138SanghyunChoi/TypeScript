@@ -58,7 +58,7 @@ export default App;
 
 // 전역 Global CSS Style
 const GlobalStyle = createGlobalStyle`
-  // ????????????????????
+  // 기본 css 초기화 및 기본값 설정
   ${reset}
   body{
     background-color: black;
