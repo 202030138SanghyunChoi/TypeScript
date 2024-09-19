@@ -1,9 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
-import Home from "./screens/home";
-import Profile from "./screens/profile";
-import Signin from "./screens/signin";
-import Signup from "./screens/signup";
+import Home from "./screens/Home";
+import Profile from "./screens/Profile";
+import SignIn from "./screens/SignIn";
+import SignUp from "./screens/SignUp";
 import reset from "styled-reset";
 
 // Page 관리 기능 - home, profile, signin, signup 기능 구현
@@ -27,11 +27,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/signin",
-    element: <Signin />,
+    element: <SignIn />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
 ]);
 
@@ -46,8 +46,7 @@ const Container = styled.div`
 
 function App() {
   return (
-    // className??????????????????????????????
-    <Container className="App">
+    <Container>
       <GlobalStyle />
       <RouterProvider router={router}></RouterProvider>
     </Container>

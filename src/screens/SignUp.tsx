@@ -4,9 +4,7 @@ import styled from "styled-components";
 import { auth } from "../firebaseConfig";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
-import home from "./home";
 
-// ?????????????????????????????????
 const Container = styled.div`
   display: flex;
   // 세로 정렬
@@ -14,6 +12,7 @@ const Container = styled.div`
   // 요소들 가운데 배치
   align-items: center;
   width: 80%;
+  
   // 반응형 웹 최대 크기
   max-width: 1600px;
   padding: 30px;
