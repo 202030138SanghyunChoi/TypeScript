@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { auth } from "../firebaseConfig";
 import { FirebaseError } from "firebase/app";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -12,11 +12,10 @@ const Container = styled.div`
   // 요소들 가운데 배치
   align-items: center;
   width: 80%;
-  
+
   // 반응형 웹 최대 크기
   max-width: 1600px;
   padding: 30px;
-  background-color: red;
 `;
 
 const Title = styled.div`
@@ -25,6 +24,10 @@ const Title = styled.div`
 `;
 
 // 로고 이미지
+const LogoImg = styled.img`
+  width: 300px;
+  height: 150px;
+`;
 
 // 회원 가입 폼
 const Form = styled.form`
@@ -33,7 +36,6 @@ const Form = styled.form`
   gap: 10px;
   flex-direction: column;
   margin-top: 30px;
-  background-color: orange;
   padding-top: 5px;
   padding-bottom: 5px;
 `;
@@ -65,7 +67,7 @@ const SubTitle = styled.p`
 const SignUpButton = styled.div`
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: green;
+  background-color: magenta;
   font-size: 15px;
   font-weight: bold;
   color: white;
@@ -84,6 +86,17 @@ const ErrorMessage = styled.div`
   font-size: 12px;
   font-weight: bold;
   overflow-y: hidden;
+`;
+
+// 로그인 페이지 이동 버튼
+const Guide = styled.span`
+  font-size: 12px;
+  text-align: center;
+  // to 옵션 스타일
+  a {
+    color: skyblue;
+    margin-left: 5px;
+  }
 `;
 
 export default () => {
@@ -127,6 +140,7 @@ export default () => {
   // 비동기 처리를 위해 함수에 async 적용
   const onSubmit = async () => {
     // 입력값 확인
+    if (loading) return;
     if (nickName === "" || email === "" || password === "") {
       alert("회원 정보를 모두 입력하십시오.");
       return false;
@@ -166,7 +180,8 @@ export default () => {
 
   return (
     <Container>
-      <Title>회원 가입</Title>
+      <LogoImg src={`${process.env.PUBLIC_URL}/Daelimx_Title.png`} />
+      {/* <Title>회원 가입</Title> */}
       <Form>
         <SubTitle>이름</SubTitle>
         {/* onChange 함수 사용 */}
@@ -198,6 +213,11 @@ export default () => {
           {loading ? "회원가입 중.." : "가입하기"}
         </SignUpButton>
         <ErrorMessage>{errorMessageGroup[error]}</ErrorMessage>
+        <Guide>
+          계정이 이미 있으신가요?
+          {/* 페이지 이동을 위한 컴포넌트 to를 통해 주소를 입력 받음 */}
+          <Link to={"/signin"}>로그인</Link>
+        </Guide>
       </Form>
     </Container>
   );
