@@ -228,9 +228,10 @@ export default () => {
 interface errorMsgGroupType {
   [key: string]: string;
 }
+
 // 인터페이스 구현
 const errorMessageGroup: errorMsgGroupType = {
   "auth/email-already-in-use": "이미 존재하는 계정입니다.",
   "auth/weak-password": "비밀번호는 6자리 이상 입력해주시기 바랍니다.",
-  "auth/invaild-email": "잘못된 이메일 혹은 잘못된 비밀번호입니다.",
+  "auth/invalid-email": "잘못된 이메일 혹은 잘못된 비밀번호입니다.",
 };
