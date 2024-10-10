@@ -5,6 +5,10 @@ import Profile from "./screens/Profile";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import reset from "styled-reset";
+import { auth } from "./firebaseConfig";
+import { useEffect, useState } from "react";
+import LoadingScreen from "./screens/LoadingScreen";
+import ProtectedRouter from "./components/ProtectedRouter";
 
 // Page 관리 기능 - home, profile, signin, signup 기능 구현
 
@@ -16,12 +20,20 @@ const router = createBrowserRouter([
       {
         // home 기능
         path: "",
-        element: <Home />,
+        element: (
+          <ProtectedRouter>
+            <Home />
+          </ProtectedRouter>
+        ),
       },
       {
         // profile 기능
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRouter>
+            <Profile />
+          </ProtectedRouter>
+        ),
       },
     ],
   },
@@ -45,7 +57,27 @@ const Container = styled.div`
 `;
 
 function App() {
-  return (
+  // 로딩 변수 선언
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Firebase API 로그인 여부 판단
+  // 비동기 사용
+  const init = async () => {
+    // Firebase 로그인 여부 판단 메서드
+    await auth.authStateReady();
+    // 일 처리 이후 로딩 종료
+    setLoading(false);
+  };
+
+  // 함수, 의존성 배열(값이 변경될 때마다 함수 호출. 생략 시 모든 state가 변경될 때마다 수행)
+  useEffect(() => {
+    init();
+  }, []);
+
+  // 로딩 여부 판단
+  return loading ? (
+    <LoadingScreen />
+  ) : (
     <Container>
       <GlobalStyle />
       <RouterProvider router={router}></RouterProvider>

@@ -13,7 +13,7 @@ const Container = styled.div`
   // 열의 크기 지정 repeat(2,1fr0 == 1fr 1fr 이므로 두 개의 컬럼이 같은 비율의 크기 차지
   grid-template-columns: repeat(2, 1fr);
   // 요소들 가운데 배치(열 기준)
-  justify-content: center;
+  justify-items: center;
   // 요소들 가운데 배치(행 기준)
   align-items: center;
   width: 80%;
@@ -21,8 +21,8 @@ const Container = styled.div`
   background-color: black;
 
   // 미디어 쿼리 사용
-  // 조건부 css 로 max-width 즉, 최대 높이가 768px 까지인 경우에는 아래 css 내용 적용 
-  @media (min-width: 768px) {
+  // 조건부 css 로 max-width 즉, 최대 높이가 768px 까지인 경우에는 아래 css 내용 적용
+  @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
   }
@@ -52,6 +52,7 @@ const Form = styled.form`
   margin-top: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
+  width: 400px;
 `;
 
 // Text 입력 칸
