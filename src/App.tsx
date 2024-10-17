@@ -80,7 +80,11 @@ function App() {
   // 로딩 여부 판단
   // loading 이 true 이면 LoadingScreen 을 띄우고, false 면 Container, 그냥 메인 화면 띄우기
   return loading ? (
-    <LoadingScreen />
+    <Container>
+      <GlobalStyle />
+      <LoadingScreen />
+    </Container>
+    
   ) : (
     <Container>
       <GlobalStyle />
