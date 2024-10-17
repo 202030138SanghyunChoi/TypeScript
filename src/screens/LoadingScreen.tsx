@@ -1,8 +1,9 @@
 import styled, { keyframes } from "styled-components";
 
+// css(높이 전체, 배경색 지정, flex 레이아웃, 가운데 정렬(x, y)
 const Container = styled.div`
   height: 100vh;
-  background-color: black;
+  background-color: springgreen;
   display: flex;
   align-items: center;
   justify-content: center;

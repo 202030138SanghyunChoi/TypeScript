@@ -21,6 +21,7 @@ const router = createBrowserRouter([
         // home 기능
         path: "",
         element: (
+          // 라우팅 시 로그인 여부를 판단하는 ProtectedRouter 를 거치기
           <ProtectedRouter>
             <Home />
           </ProtectedRouter>
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
         // profile 기능
         path: "profile",
         element: (
+          // 라우팅 시 로그인 여부를 판단하는 ProtectedRouter 를 거치기
           <ProtectedRouter>
             <Profile />
           </ProtectedRouter>
@@ -69,12 +71,14 @@ function App() {
     setLoading(false);
   };
 
-  // 함수, 의존성 배열(값이 변경될 때마다 함수 호출. 생략 시 모든 state가 변경될 때마다 수행)
+  // 함수, 의존성 배열(값이 변경될 때마다 함수 호출. 생략 시 모든 state 가 변경될 때마다 수행)
   useEffect(() => {
+    // 초기화라고 이름을 지었지만 일단은 Firebase API 로그인 여부만 판단
     init();
   }, []);
 
   // 로딩 여부 판단
+  // loading 이 true 이면 LoadingScreen 을 띄우고, false 면 Container, 그냥 메인 화면 띄우기
   return loading ? (
     <LoadingScreen />
   ) : (
@@ -92,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
   // 기본 css 초기화 및 기본값 설정
   ${reset}
   body{
-    background-color: black;
+    background-color: springgreen;
     color: white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
