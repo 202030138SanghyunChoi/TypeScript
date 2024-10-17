@@ -3,6 +3,7 @@ import { auth } from "../firebaseConfig";
 
 type Props = { children: React.ReactNode };
 
+// 로그인 할 때 이미 로그인 검증을 했지만 비정상적 루트로 컴포넌트에 접근하는 것을 막기 위해 로그인 검증 여부를 판단하는 컴포넌트
 export default ({ children }: Props) => {
   // 유저 정보 변수 선언
   const user = auth.currentUser;

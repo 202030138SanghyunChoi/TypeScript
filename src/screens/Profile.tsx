@@ -5,6 +5,6 @@ const Title = styled.div``;
 
 export default () => {
     return <Container>
-        <Title>Profile Page</Title>        
+        <Title>Profile Page</Title>
     </Container>
 }

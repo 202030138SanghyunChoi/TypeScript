@@ -4,18 +4,45 @@ import styled from "styled-components";
 import { auth } from "../firebaseConfig";
 import { FirebaseError } from "firebase/app";
 import { Link, useNavigate } from "react-router-dom";
-
 const Container = styled.div`
   display: flex;
-  // 세로 정렬
-  flex-direction: column;
-  // 요소들 가운데 배치
-  align-items: center;
-  width: 80%;
+  // 가상 요소를 위해 relative
+  position: relative;
 
-  // 반응형 웹 최대 크기
-  max-width: 1600px;
-  padding: 30px;
+  // 중앙배치
+  margin: auto;
+  // 화면 상대 길이
+  width: 20%;
+  height: 500px;  
+  // 반응형 웹 최소, 최대 크기
+  min-width: 300px;
+  max-width: 400px;
+  // 테두리 둥글게
+  border-radius: 20px;
+
+  // 내부에서부터 테두리까지의 간격
+  //padding: 10px;
+  // 내부 요소들 세로 정렬(가운데 배치)
+  flex-direction: column;
+  align-items: center;
+
+  // 요소들은 내비두고 배경만 투명하게..
+  &::before {
+    content: " ";
+    margin: auto;
+    
+    position: absolute;
+    inset: 0;
+    
+    // 테두리 둥글게
+    border-radius: 20px;
+    //// 요소들보다 아래 깔리게
+    z-index: -1;
+    // 배경색 및 투명도
+    background: black;
+    opacity: 0.4;
+  }
+
 `;
 
 const Title = styled.div`
@@ -31,6 +58,7 @@ const LogoImg = styled.img`
 
 // 회원 가입 폼
 const Form = styled.form`
+  width: 80%;
   display: flex;
   // 안에서 요소들끼리 간격
   gap: 10px;

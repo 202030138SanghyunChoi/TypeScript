@@ -10,15 +10,14 @@ import GoogleSignUpButton from "../components/GoogleSignUpButton";
 const Container = styled.div`
   // 고정 영역 차지
   display: grid;
+  // 배경색 및 투명도
   // 열의 크기 지정 repeat(2,1fr0 == 1fr 1fr 이므로 두 개의 컬럼이 같은 비율의 크기 차지
   grid-template-columns: repeat(2, 1fr);
   // 요소들 가운데 배치(열 기준)
   justify-items: center;
   // 요소들 가운데 배치(행 기준)
   align-items: center;
-  width: 80%;
   padding: 30px;
-  background-color: black;
 
   // 미디어 쿼리 사용
   // 조건부 css 로 max-width 즉, 최대 높이가 768px 까지인 경우에는 아래 css 내용 적용

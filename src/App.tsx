@@ -96,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
   // 기본 css 초기화 및 기본값 설정
   ${reset}
   body{
-    background-color: springgreen;
+    background: linear-gradient(90deg, #EF3DF2, #2E338C, #1E2040); 
     color: white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
