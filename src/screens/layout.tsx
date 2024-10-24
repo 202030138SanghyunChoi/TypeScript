@@ -34,7 +34,7 @@ const MenuItem = styled.div`
     width: 40px;
     height: 40px;
     fill: white;
-    // border도 하얀색으로 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
   }
 `;
 
@@ -71,45 +71,27 @@ export default () => {
         </Link>
         <Link to={"/profile"}>
           <MenuItem>
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-width="2"
-                d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
+            <svg className="w-[48px] h-[48px] text-gray-800 dark:text-white" aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                    clip-rule="evenodd"/>
             </svg>
           </MenuItem>
         </Link>
         <BottomMenu>
           <MenuItem>
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
-              />
+            <svg className="w-[48px] h-[48px] text-gray-800 dark:text-white" aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                    d="M5 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Zm-2 9a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1Zm13-6a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4Z"
+                    clip-rule="evenodd"/>
             </svg>
           </MenuItem>
         </BottomMenu>
       </Navigator>
-      {/* Outlet 으로 children 가져오기 ???????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????? */}
-      <Outlet />
+      {/* 부모 라우터에 정의되어 있는 자식 라우터 렌더링. path: "/" 가 부모 라우터, 거기에 정의 되어 있는 라우터는 children */}
+      <Outlet/>
     </Container>
   );
 };
