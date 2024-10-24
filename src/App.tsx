@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import Home from "./screens/Home";
 import Profile from "./screens/Profile";
@@ -9,6 +9,7 @@ import { auth } from "./firebaseConfig";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./screens/LoadingScreen";
 import ProtectedRouter from "./components/ProtectedRouter";
+import Layout from "./screens/layout";
 
 // Page 관리 기능 - home, profile, signin, signup 기능 구현
 
@@ -16,26 +17,25 @@ import ProtectedRouter from "./components/ProtectedRouter";
 const router = createBrowserRouter([
   {
     path: "/",
+    // 라우팅 시 로그인 여부를 판단하는 ProtectedRouter 를 거치기
+    element: (
+      <ProtectedRouter>
+        <Layout />
+      </ProtectedRouter>
+    ),
     children: [
       {
         // home 기능
         path: "",
         element: (
-          // 라우팅 시 로그인 여부를 판단하는 ProtectedRouter 를 거치기
-          <ProtectedRouter>
-            <Home />
-          </ProtectedRouter>
+          // 컴포넌트 태그 사이에 넣는 모든 태그 및 html 요소는 Children으로 자동으로 들어감
+          <Home />
         ),
       },
       {
         // profile 기능
         path: "profile",
-        element: (
-          // 라우팅 시 로그인 여부를 판단하는 ProtectedRouter 를 거치기
-          <ProtectedRouter>
-            <Profile />
-          </ProtectedRouter>
-        ),
+        element: <Profile />,
       },
     ],
   },
@@ -84,7 +84,6 @@ function App() {
       <GlobalStyle />
       <LoadingScreen />
     </Container>
-    
   ) : (
     <Container>
       <GlobalStyle />
