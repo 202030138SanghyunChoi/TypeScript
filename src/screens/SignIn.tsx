@@ -206,6 +206,13 @@ export default () => {
     }
   };
 
+  // 엔터 키 입력 시 로그인
+  const activeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   return (
     <Container>
       <LogoImg src={`${process.env.PUBLIC_URL}/Daelimx_Title.png`} />
@@ -219,6 +226,7 @@ export default () => {
           placeholder="example@gmail.com"
           onChange={onChange}
           value={email}
+          onKeyDown={(e) => activeEnter(e)}
         />
         <SubTitle>비밀번호</SubTitle>
         <Input
@@ -227,6 +235,7 @@ export default () => {
           placeholder="6자리 이상 입력"
           onChange={onChange}
           value={password}
+          onKeyDown={(e) => activeEnter(e)}
         />
         {/* onSubmit 함수 사용 */}
         {/* loading 적용 */}
