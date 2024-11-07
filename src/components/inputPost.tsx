@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { auth } from "../firebaseConfig";
+import {auth, firestore} from "../firebaseConfig";
+import { collection, addDoc } from "firebase/firestore"
 
 const Form = styled.form`
   display: flex;
@@ -87,35 +88,43 @@ export default () => {
     }
   };
   // 제출
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Form 제출 시 redirect 방지
     e.preventDefault();
 
-    // 제출하는 유저 정보 설정
-    const user = auth.currentUser;
+    // 비동기 동작 시에는 try catch
+    try {
+      // 제출하는 유저 정보 설정
+      const user = auth.currentUser;
 
-    // 로그인은 안했거나(null) 텍스트를 안쓰면(post == null)
-    if (user == null || post == null) {
-      // 함수 탈출
-      return;
+      // 로그인은 안했거나(null) 텍스트를 안쓰면(post == null)
+      if (user == null || post == null) {
+        // 함수 탈출
+        return;
+      }
+
+      // Firebase 제출 데이터 정리(toJson)
+      const myPost = {
+        // user 닉네임
+        nickname: user.displayName,
+        // user ID
+        userId: user.uid,
+        // 제출 시각(현재 시각)
+        createdAt: Date.now(),
+        // Text
+        post: post,
+        // 사진(용량 관련 이슈로 잠시 주석 처리)
+        // photo: file,
+      };
+      
+      // fireBase 제출(firebaseConfig.ts 에서 설정한 firestore 로 posts 라는 컬렉션에 문서 추가
+      const path = collection(firestore, "posts");
+      // path 를 통해 문서 추가 메서드 (path 위치로, myPost(JSON)) 을
+      await addDoc(path, myPost);
+    } catch (e) {
+      // 경고 처리
+      console.warn("경고: ", e);
     }
-
-    // Firebase 제출
-    const myPost = {
-      // user 닉네임
-      nickname: user.displayName,
-      // user ID
-      userId: user.uid,
-      // 제출 시각(현재 시각)
-      createdAt: Date.now(),
-      // Text
-      post: post,
-      // 사진
-      // photo: file,
-    };
-
-    // const path = collection(firestone, "posts");
-    // await addDoc(path, myPost);
   };
 
   return (
