@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { auth } from "../firebaseConfig";
 
 const Form = styled.form`
   display: flex;
@@ -86,10 +87,39 @@ export default () => {
     }
   };
   // 제출
-  const onSubmit = () => {};
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Form 제출 시 redirect 방지
+    e.preventDefault();
+
+    // 제출하는 유저 정보 설정
+    const user = auth.currentUser;
+
+    // 로그인은 안했거나(null) 텍스트를 안쓰면(post == null)
+    if (user == null || post == null) {
+      // 함수 탈출
+      return;
+    }
+
+    // Firebase 제출
+    const myPost = {
+      // user 닉네임
+      nickname: user.displayName,
+      // user ID
+      userId: user.uid,
+      // 제출 시각(현재 시각)
+      createdAt: Date.now(),
+      // Text
+      post: post,
+      // 사진
+      // photo: file,
+    };
+
+    // const path = collection(firestone, "posts");
+    // await addDoc(path, myPost);
+  };
 
   return (
-    <Form>
+    <Form onSubmit={(e) => onSubmit(e)}>
       <ProfileArea></ProfileArea>
       <PostArea>
         <TextArea
@@ -145,7 +175,7 @@ export default () => {
             type="file"
             accept="image/*"
           />
-          <SubmitButton onSubmit={() => onSubmit()} type="submit" />
+          <SubmitButton type="submit" />
         </BottomMenu>
       </PostArea>
     </Form>
