@@ -52,7 +52,7 @@ export default () => {
       {posts.map((post) => {
         return (
           <div>
-            <h1>{post.nickname}</h1>
+            <h1>{"[[" + post.nickname + "]]"}</h1>
             <p>{post.post}</p>
             <hr />
           </div>
