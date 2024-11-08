@@ -124,6 +124,8 @@ export default () => {
     } catch (e) {
       // 경고 처리
       console.warn("경고: ", e);
+    } finally {
+
     }
   };
 
