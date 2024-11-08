@@ -40,6 +40,7 @@ export default () => {
     setPosts(timeLinePosts);
   };
 
+  // Effect Hook.
   // 의존성 배열 변경시 마다 콜백함수(Parameter로 함수가 들어올 경우) 실행. 배열을 비워두면 페이지 최초 로드 시 한번만 수행
   useEffect(() => {
     fetchPosts();
