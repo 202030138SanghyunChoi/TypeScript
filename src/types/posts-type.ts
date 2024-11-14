@@ -9,7 +9,7 @@ export type IPost = {
   /** 사용자 아이디 */
   userId: string;
   /** 게시 날짜 */
-  createdAt: Number;
+  createdAt: number;
   // 선택 사항으로 설정을 위해 ? 지정
   /** 사진 URL */
   photoUrl?: string;

@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import LoadingScreen from "./screens/LoadingScreen";
 import ProtectedRouter from "./components/ProtectedRouter";
 import Layout from "./screens/layout";
+// moment 패키지 korea 언어 설정
+import "moment/locale/ko";
 
 // Page 관리 기능 - home, profile, signin, signup 기능 구현
 
