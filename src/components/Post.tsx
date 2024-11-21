@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { IPost } from "../types/posts-type";
 import { auth } from "../firebaseConfig";
 import moment from "moment";
+import Item from "./Post-ItemMenu";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -54,29 +55,12 @@ const CreateTime = styled.div`
   color: #b6b6b6;
 `;
 
-const Footer = styled.div``;
-
-const ItemBox = styled.div``;
-
-const ItemIcon = styled.span``;
-
-const ItemText = styled.span``;
-
-// 유니온 타입(3가지 중 하나만 사용 가능)
-type ItemIcon = "like" | "view" | "comment";
-
-// 커스텀 타입
-type IItem = { type: ItemIcon; num: number };
-
-// 글 부가 기능 함수 컴포넌트(Footer에 넣을 컴포넌트)
-const Item = ({ type, num }: IItem) => {
-  return (
-    <ItemBox>
-      <ItemIcon />
-      <ItemText>댓글</ItemText>
-    </ItemBox>
-  );
-};
+const Footer = styled.div`
+  margin-top: 10px;
+  margin-left: 30px;
+  display: flex;
+  gap: 15px;
+`;
 
 // 기본 프로필 이미지
 const defaultProfileImage = "https://www.svgrepo.com/show/535711/user.svg";
