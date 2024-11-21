@@ -25,6 +25,7 @@ const ProfileImg = styled.img`
 
 const Content = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 8px;
 `;
@@ -62,8 +63,27 @@ const Footer = styled.div`
   gap: 15px;
 `;
 
+const Topbar = styled.div`
+  display: flex;
+  /* 좌우 끝 정렬. 홀수일 경우 좌 가운데 우 끝 정렬. */
+  justify-content: space-between;
+`;
+
+const DeleteBtn = styled.button`
+  cursor: pointer;
+  font-size: 10px;
+`;
+
 // 기본 프로필 이미지
 const defaultProfileImage = "https://www.svgrepo.com/show/535711/user.svg";
+
+const onDelete = () => {
+  const isOk = window.confirm("게시글을 삭제하시겠습니까?");
+
+  if (isOk) {
+    // 삭제 로직
+  }
+};
 
 // TimeLine.tsx 에서 받을 Property 설정 (각각의 post 의 데이터를 구조체 형태로, 타입스크립트 때문에 IPost 로 타입 지정)
 export default ({ userId, createdAt, nickname, post, photoUrl }: IPost) => {
@@ -75,15 +95,18 @@ export default ({ userId, createdAt, nickname, post, photoUrl }: IPost) => {
           <ProfileImg src={photoUrl || defaultProfileImage} />
         </ProfileArea>
         <Content>
-          <UserInfo>
-            <UserName>{nickname}</UserName>
-            {
-              // and 연산자를 이용했기 때문에 auth.currentUser 가 false 면 후연산인 auth.currentUser.email 는 실행되지 않음. 하나라도 false 면 false 이기 때문에 계산 처리 완료
-              auth.currentUser && (
-                <UserEmail>{auth.currentUser.email}</UserEmail>
-              )
-            }
-          </UserInfo>
+          <Topbar>
+            <UserInfo>
+              <UserName>{nickname}</UserName>
+              {
+                // and 연산자를 이용했기 때문에 auth.currentUser 가 false 면 후연산인 auth.currentUser.email 는 실행되지 않음. 하나라도 false 면 false 이기 때문에 계산 처리 완료
+                auth.currentUser && (
+                  <UserEmail>{auth.currentUser.email}</UserEmail>
+                )
+              }
+            </UserInfo>
+            <DeleteBtn onClick={onDelete}>X</DeleteBtn>
+          </Topbar>
           <PostText>{post}</PostText>
           {/* moment 패키지를 사용하여 UTC 시간 포맷 */}
           <CreateTime>{moment(createdAt).fromNow()}</CreateTime>
