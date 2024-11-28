@@ -57,7 +57,7 @@ export default () => {
 
     // firestore 의 Unsubscribe 선언(실시간 동작이 끝나면 구독을 종료하는 함수)
     // 타입 스크립트 지정( Unsubscribe 또는 null ) - onSnapShot 전에 Undefined 되기 때문에 초기값을 위해 null 타입도 지정
-    let unsubscribe: Unsubscribe | null;
+    let unsubscribe: Unsubscribe | null = null;
 
     const fetchPostsRealTime = async () => {
       // firestore "posts" 컬렉션으로 경로 지정

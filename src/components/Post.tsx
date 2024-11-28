@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { IPost } from "../types/posts-type";
-import { auth } from "../firebaseConfig";
+import { auth, firestore } from "../firebaseConfig";
 import moment from "moment";
 import Item from "./Post-ItemMenu";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const Container = styled.div`
   border: 1px solid black;
@@ -77,16 +78,30 @@ const DeleteBtn = styled.button`
 // 기본 프로필 이미지
 const defaultProfileImage = "https://www.svgrepo.com/show/535711/user.svg";
 
-const onDelete = () => {
-  const isOk = window.confirm("게시글을 삭제하시겠습니까?");
-
-  if (isOk) {
-    // 삭제 로직
-  }
-};
-
 // TimeLine.tsx 에서 받을 Property 설정 (각각의 post 의 데이터를 구조체 형태로, 타입스크립트 때문에 IPost 로 타입 지정)
-export default ({ userId, createdAt, nickname, post, photoUrl }: IPost) => {
+export default ({ id, userId, createdAt, nickname, post, photoUrl }: IPost) => {
+  // 현재 유저
+  const currentUser = auth.currentUser;
+
+  const onDelete = async () => {
+    const isOk = window.confirm("게시글을 삭제하시겠습니까?");
+
+    // 삭제 처리
+    if (isOk) {
+      // 서버 통신 시에는 try catch
+      try {
+        // 삭제 수행s
+        // 비동기 처리
+        // firestore 객의 posts 라는 이름의 컬렉션에서 해당 PK id 게시글을 받아오기
+        const removeDoc = await doc(firestore, "posts", id);
+        // 위에서 구한 removeDoc 를 삭제
+        await deleteDoc(removeDoc);
+      } catch (e) {
+        console.error("post delete error: " + e);
+      }
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -105,7 +120,11 @@ export default ({ userId, createdAt, nickname, post, photoUrl }: IPost) => {
                 )
               }
             </UserInfo>
-            <DeleteBtn onClick={onDelete}>X</DeleteBtn>
+            {/* ? 를 통해 옵션값 처리를 통해 앞에 값이 없으면 실행하지 않음 */}
+            {/* and 연산자를 이용했기 때문에 auth.currentUser 가 false 면 후연산인 auth.currentUser.email 는 실행되지 않음. 하나라도 false 면 false 이기 때문에 계산 처리 완료 */}
+            {userId === currentUser?.uid && (
+              <DeleteBtn onClick={onDelete}>X</DeleteBtn>
+            )}
           </Topbar>
           <PostText>{post}</PostText>
           {/* moment 패키지를 사용하여 UTC 시간 포맷 */}

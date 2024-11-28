@@ -2,6 +2,8 @@
 
 /** 게시글 타입 */
 export type IPost = {
+  /** PK id */
+  id: string;
   /** 게시글 내용 */
   post: string;
   /** 사용자 이름 */
