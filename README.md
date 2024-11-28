@@ -48,3 +48,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## TODO
 
 inputPost, firebaseConfig.js
+
+## Hosting URL
+
+https://daelimx-6f5a2.web.app
