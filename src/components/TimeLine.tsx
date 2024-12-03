@@ -23,7 +23,7 @@ export default () => {
     // 경로 지정(firebase DB, posts 라는 이름의 컬렉션으로 지정)
     const path = collection(firestore, "posts");
     // 조건 지정. OrderBy 를 사용(기준 필드, 오름차순/내림차순) 내림차순(최신순)으로 받기 위해 desc
-    const condition = orderBy("createdAt", "desc");
+    const condition = orderBy("createdAt", "asc");
     // firebase qeury 메서드(경로와 조건 지정)로 postsQuery 에 명세서 저장
     const postsQuery = query(path, condition);
     // 명세서를 이용하여 snapshot(임시 주소 저장의 의미) 에 게시글들 저장(외부 소통 await)
@@ -63,7 +63,7 @@ export default () => {
       // firestore "posts" 컬렉션으로 경로 지정
       const path = collection(firestore, "posts");
       // 만들어진 날짜를 기준으로 내림차순(최신순)
-      const condition = orderBy("createdAt", "desc");
+      const condition = orderBy("createdAt", "asc");
       // 경로와 조건을 기준으로 쿼리생성
       const postsQuery = query(path, condition);
       // 쿼리를 넣어 onSnapshot 수행.
@@ -102,22 +102,21 @@ export default () => {
   }, []);
 
   return (
-    <Container>
-      <hr />
-      {/* map 함수를 이용하여 post의 정보 값 출력 */}
-      {posts.map((post) => {
-        // 함수형 컴포넌트에 Props 전달
-        return (
-          <Post
-            // es: ... 을 통해 Spread Operator 구조체의 값을 전부 전송(전송하는 props 의 key 와 value 이름 일치 시)
-            {...post}
-            // userId={post.userId}
-            // createdAt={post.createdAt}
-            // nickname={post.nickname}
-            // post={post.post}
-          />
-        );
-      })}
-    </Container>
+      <Container>
+        {/* map 함수를 이용하여 post의 정보 값 출력 */}
+        {posts.map((post) => {
+          // 함수형 컴포넌트에 Props 전달
+          return (
+              <Post
+                  // es: ... 을 통해 Spread Operator 구조체의 값을 전부 전송(전송하는 props 의 key 와 value 이름 일치 시)
+                  {...post}
+                  // userId={post.userId}
+                  // createdAt={post.createdAt}
+                  // nickname={post.nickname}
+                  // post={post.post}
+              />
+          );
+        })}
+      </Container>
   );
 };
