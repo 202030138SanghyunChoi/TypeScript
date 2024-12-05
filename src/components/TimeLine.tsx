@@ -12,7 +12,10 @@ import {
 import { firestore } from "../firebaseConfig";
 import Post from "./Post";
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: grid;  
+  gap: 10px;
+`;
 
 export default () => {
   // 게시글들 다룰 State Hook. 타입스크립트를 적용하여 IPost 배열을 다룸. 초기값 빈 배열

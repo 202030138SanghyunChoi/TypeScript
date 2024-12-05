@@ -6,7 +6,9 @@ import Item from "./Post-ItemMenu";
 import { deleteDoc, doc } from "firebase/firestore";
 
 const Container = styled.div`
-  border: 1px solid black;
+  border-radius: 10px;
+  // 배경 30% 투명하게(아니 이렇게 쉬운 방법이?)
+  background-color: rgba(255, 255, 255, 0.3);
   padding: 10px 15px;
 `;
 
@@ -71,8 +73,26 @@ const Topbar = styled.div`
 `;
 
 const DeleteBtn = styled.button`
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+  // 배경 없애기
+  background-color: transparent;
+  // 조금 두껍게
+  border: 1px solid red;
+  // 동그라미보단 네모처럼
+  border-radius: 5px;
+  color: red;
+  // 마우스 클릭 호버링
   cursor: pointer;
-  font-size: 10px;
+  // 강제 대문자
+  text-transform: uppercase;
+  // 글꼴 적용이 안되넹(된건가 별로 안이쁜 거 같은데)
+  font-weight: bolder;
+  font-family: "Montserrat", sans-serif;
+
+  &:hover {
+    box-shadow: 0 0 40px 40px red inset;
+    color: white;
+  }
 `;
 
 // 기본 프로필 이미지
@@ -123,7 +143,7 @@ export default ({ id, userId, createdAt, nickname, post, photoUrl }: IPost) => {
             {/* ? 를 통해 옵션값 처리를 통해 앞에 값이 없으면 실행하지 않음 */}
             {/* and 연산자를 이용했기 때문에 auth.currentUser 가 false 면 후연산인 auth.currentUser.email 는 실행되지 않음. 하나라도 false 면 false 이기 때문에 계산 처리 완료 */}
             {userId === currentUser?.uid && (
-              <DeleteBtn onClick={onDelete}>X</DeleteBtn>
+              <DeleteBtn onClick={onDelete}>Delete</DeleteBtn>
             )}
           </Topbar>
           <PostText>{post}</PostText>

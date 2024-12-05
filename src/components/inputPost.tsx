@@ -9,7 +9,7 @@ const Form = styled.form`
   gap: 10px;
   border-radius: 20px;
   // 배경 30% 투명하게(아니 이렇게 쉬운 방법이?)
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
 `;
 const ProfileArea = styled.div`
   width: 50px;
@@ -33,16 +33,20 @@ const TextArea = styled.textarea`
   /* text area 크기 조절 못하게 */
   height: 22px;
   resize: none;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.43);
   color: white;
   width: 100%;
   // 글꼴 설정(시스템에서 사용중인 거로)
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-weight: bold;
-  border-radius: 10px;
+  border-radius: 5px;
   border: none;
-  /* 컴포넌트 선택 시 */
+
+  &::placeholder {
+    color: #b8b8b8;
+  }
+
   &:focus {
     // 테두리 꼴도 보기 싫음
     outline: none;
@@ -57,34 +61,42 @@ const BottomMenu = styled.div`
 `;
 const AttachPhotoButton = styled.label`
   padding: 5px 10px;
-  background-color: rgba(14, 58, 234, 0.3);
   color: black;
-  border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
+  
   /* 마우스 올릴 때 */
   cursor: pointer;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 0 rgba(87, 14, 234, 0.6), inset 6px 6px 0 0 rgba(87, 14, 234, 0.6);
+  transition: 0.3s;
 
   &:hover {
-    // 0.8 투명도
-    opacity: 0.8;
+    box-shadow: 0 0 0 0 rgba(87, 14, 234, 0.6), inset 108px 72px 0 0 rgba(87, 14, 234, 0.6);
   }
 `;
 const AttachPhotoInput = styled.input`
   display: none;
 `;
 const SubmitButton = styled.input`
-  padding: 5px 10px;
-  border-radius: 20px;
+  // input 태그 모서리랑 배경 삭제
+  background: transparent;
   border: none;
-  background-color: rgba(14, 58, 234, 0.3);
-  font-weight: bold;
+  // padding 값
+  padding: 5px 10px;
+  // 글씨 색
+  color: black;
+  // 글씨 크기
   font-size: 12px;
-  /* 마우스 올릴 때 */
+  // 마우스 호버링시 클릭 마우스
   cursor: pointer;
+
+  border-radius: 0;
+  box-shadow: 6px 6px 0 0 rgba(87, 14, 234, 0.6), inset 6px 6px 0 0 rgba(87, 14, 234, 0.6);
+  transition: 0.3s;
+
   &:hover {
-    // 0.8 투명도
-    opacity: 0.8;
+    box-shadow: 0 0 0 0 rgba(87, 14, 234, 0.6), inset 108px 72px 0 0 rgba(87, 14, 234, 0.6);
   }
 `;
 
@@ -139,7 +151,7 @@ export default () => {
       const user = auth.currentUser;
 
       // 로그인은 안했거나(null) 텍스트를 안썼거나(post == null) 로딩이 true면
-      if (user == null || post == null || loading) {
+      if (user == null|| post == "" || loading) {
         // 함수 탈출
         return;
       }
@@ -192,7 +204,7 @@ export default () => {
             ref={textAreaRef}
             rows={1}
             value={post}
-            placeholder="text your story"
+            placeholder="메시지 입력"
             // e 를 위 onChange() 함수의 Parameter 로 전송
             onChange={(e) => onChange(e)}
             // 엔터키 입력 시 제출
