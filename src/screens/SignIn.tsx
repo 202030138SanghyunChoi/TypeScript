@@ -215,7 +215,7 @@ export default () => {
 
   return (
     <Container>
-      <LogoImg src={`${process.env.PUBLIC_URL}/Daelimx_Title.png`} />
+      <LogoImg src={`${process.env.PUBLIC_URL}/DaelimxTitle.png`} />
       {/* <Title>회원 가입</Title> */}
       <Form>
         <Title>환영합니다.</Title>
