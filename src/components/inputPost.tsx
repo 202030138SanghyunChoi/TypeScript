@@ -5,9 +5,11 @@ import { collection, addDoc } from "firebase/firestore";
 
 const Form = styled.form`
   display: flex;
-  border: 1px solid black;
   padding: 20px;
   gap: 10px;
+  border-radius: 20px;
+  // 배경 30% 투명하게(아니 이렇게 쉬운 방법이?)
+  background-color: rgba(255, 255, 255, 0.3);
 `;
 const ProfileArea = styled.div`
   width: 50px;
@@ -29,6 +31,7 @@ const PostArea = styled.div`
 
 const TextArea = styled.textarea`
   /* text area 크기 조절 못하게 */
+  height: 22px;
   resize: none;
   background-color: black;
   color: white;
@@ -54,13 +57,14 @@ const BottomMenu = styled.div`
 `;
 const AttachPhotoButton = styled.label`
   padding: 5px 10px;
-  background-color: white;
+  background-color: rgba(14, 58, 234, 0.3);
   color: black;
   border-radius: 20px;
   font-size: 12px;
   font-weight: bold;
   /* 마우스 올릴 때 */
   cursor: pointer;
+
   &:hover {
     // 0.8 투명도
     opacity: 0.8;
@@ -157,6 +161,8 @@ export default () => {
       // path 를 통해 문서 추가 메서드 (path 위치로, myPost(JSON)) 을
       await addDoc(path, myPost);
 
+      setPost('');
+
       // storage 에 이미지 업로드 - 사진(firebae 요금제 관련 이슈로 잠시 주석 처리)
     } catch (e) {
       // 경고 처리
@@ -189,6 +195,15 @@ export default () => {
             placeholder="text your story"
             // e 를 위 onChange() 함수의 Parameter 로 전송
             onChange={(e) => onChange(e)}
+            // 엔터키 입력 시 제출
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (textAreaRef.current) {
+                  textAreaRef.current.form?.requestSubmit();  // 폼을 제출
+                }
+              }
+            }}
         ></TextArea>
         <BottomMenu>
           {/* htmlFor 로 id=photo 태그를 안에 넣음 */}
@@ -231,7 +246,7 @@ export default () => {
                   </g>
                 </svg>
             ) : (
-                "사진 업로드"
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 3C13 2.44772 12.5523 2 12 2C11.4477 2 11 2.44772 11 3V11H3C2.44772 11 2 11.4477 2 12C2 12.5523 2.44772 13 3 13H11V21C11 21.5523 11.4477 22 12 22C12.5523 22 13 21.5523 13 21V13H21C21.5523 13 22 12.5523 22 12C22 11.4477 21.5523 11 21 11H13V3Z" fill="#0F0F0F"></path> </g></svg>
             )}
           </AttachPhotoButton>
           {/* accept 로 파일 포맷 지정 */}
